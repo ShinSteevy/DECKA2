@@ -1,0 +1,4 @@
+repository "DECKA@DECKA@cloud"
+  path "/"
+    br "/main"
+    co "/main"
