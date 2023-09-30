@@ -56,7 +56,7 @@ public class RigidbodyMovement : MonoBehaviour
             
                 animator.SetFloat("moveX",direction.x);
                 animator.SetFloat("moveY",direction.y);
-            if(count == 0){
+            if(count == 0){ 
                 rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
                 
                 
