@@ -15,6 +15,8 @@ public class RigidbodyMovement : MonoBehaviour
     Animator animator;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
+    bool canMove = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,17 +25,19 @@ public class RigidbodyMovement : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        // If movement input is not 0, try to move
-        if(movementInput != Vector2.zero){
-            bool success = TryMove(movementInput);  
+        if(canMove) {
+            // If movement input is not 0, try to move
+            if(movementInput != Vector2.zero){
 
-            if(!success) {
+                bool success = TryMove(movementInput);  
+
+                if(!success) {
                 success = TryMove(new Vector2(movementInput.x, 0));
-            }    
+                }    
 
-            if(!success) {
+                if(!success) {
                 success = TryMove(new Vector2(0, movementInput.y));
-            } 
+                } 
 
             animator.SetBool("isMoving", success);
         } else {
@@ -41,6 +45,7 @@ public class RigidbodyMovement : MonoBehaviour
         }
 
         // Set direction of sprite to movement direction
+        }
   
     }
 
@@ -73,5 +78,17 @@ public class RigidbodyMovement : MonoBehaviour
     void OnMove(InputValue movementValue) {
         movementInput = movementValue.Get<Vector2>();
 
+    }
+
+    void OnUse() {
+        animator.SetTrigger("SwingTool");
+    }
+
+    public void LockMovement() {
+        canMove = false;
+    }
+
+    public void UnlockMovement() {
+        canMove = true;
     }
 }
